@@ -42,10 +42,10 @@ class Version10000Date20201015143852 extends SimpleMigrationStep {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 
-		if ($schema->hasTable('talk_participants')) {
-			$schema->dropTable('talk_participants');
-			return $schema;
-		}
+//		if ($schema->hasTable('talk_participants')) {
+//			$schema->dropTable('talk_participants');
+//			return $schema;
+//		}
 
 		return null;
 	}
