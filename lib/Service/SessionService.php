@@ -33,16 +33,16 @@ use OCP\Security\ISecureRandom;
 
 class SessionService {
 	/** @var SessionMapper */
-	protected $mapper;
+	protected $sessionMapper;
 	/** @var IDBConnection */
 	protected $connection;
 	/** @var ISecureRandom */
 	protected $secureRandom;
 
-	public function __construct(SessionMapper $mapper,
+	public function __construct(SessionMapper $sessionMapper,
 								IDBConnection $connection,
 								ISecureRandom $secureRandom) {
-		$this->mapper = $mapper;
+		$this->sessionMapper = $sessionMapper;
 		$this->connection = $connection;
 		$this->secureRandom = $secureRandom;
 	}
@@ -67,6 +67,9 @@ class SessionService {
 	}
 
 	public function createSessionForAttendee(Attendee $attendee): Session {
+		// Currently a participant can only join once
+		$this->sessionMapper->deleteByAttendeeId($attendee->getId());
+
 		$session = new Session();
 		$session->setAttendeeId($attendee->getId());
 
@@ -74,7 +77,7 @@ class SessionService {
 			$sessionId = $this->secureRandom->generate(255);
 			$session->setSessionId($sessionId);
 			try {
-				$this->mapper->insert($session);
+				$this->sessionMapper->insert($session);
 				break;
 			} catch (UniqueConstraintViolationException $e) {
 				// 255 chars are not unique? Try again...
