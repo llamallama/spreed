@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import AppSidebar from '@nextcloud/vue/dist/Components/AppSidebar'
 import AppSidebarTab from '@nextcloud/vue/dist/Components/AppSidebarTab'
@@ -85,7 +86,6 @@ import ParticipantsTab from './Participants/ParticipantsTab'
 import MatterbridgeSettings from './Matterbridge/MatterbridgeSettings'
 import isInLobby from '../../mixins/isInLobby'
 import SetGuestUsername from '../SetGuestUsername'
-import { EventBus } from '../../services/EventBus'
 
 export default {
 	name: 'RightSidebar',
@@ -245,7 +245,7 @@ export default {
 		},
 
 		showSettings() {
-			EventBus.$emit('show-settings', true)
+			emit('show-settings')
 		},
 
 	},
