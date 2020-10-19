@@ -569,6 +569,7 @@ class Manager {
 		}
 
 		if ((string) $userId !== $row['actor_id']) {
+			// FIXME check the actor type too and bail out for guests
 			throw new RoomNotFoundException();
 		}
 
