@@ -1446,11 +1446,12 @@ class RoomController extends AEnvironmentAwareController {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
-		if ($targetParticipant->getParticipantType() !== Participant::USER) {
+		$attendee = $targetParticipant->getAttendee();
+		if ($attendee->getParticipantType() !== Participant::USER) {
 			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
 
-		$room->setParticipantType($targetParticipant, Participant::MODERATOR);
+		$this->participantService->updateParticipantType($room, $targetParticipant, Participant::MODERATOR);
 
 		return new DataResponse();
 	}
@@ -1462,11 +1463,12 @@ class RoomController extends AEnvironmentAwareController {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
-		if ($targetParticipant->getParticipantType() !== Participant::GUEST) {
+		$attendee = $targetParticipant->getAttendee();
+		if ($attendee->getParticipantType() !== Participant::GUEST) {
 			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
 
-		$room->setParticipantType($targetParticipant, Participant::GUEST_MODERATOR);
+		$this->participantService->updateParticipantType($room, $targetParticipant, Participant::GUEST_MODERATOR);
 
 		return new DataResponse();
 	}
@@ -1498,11 +1500,12 @@ class RoomController extends AEnvironmentAwareController {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
-		if ($targetParticipant->getParticipantType() !== Participant::MODERATOR) {
+		$attendee = $targetParticipant->getAttendee();
+		if ($attendee->getParticipantType() !== Participant::MODERATOR) {
 			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
 
-		$room->setParticipantType($targetParticipant, Participant::USER);
+		$this->participantService->updateParticipantType($room, $targetParticipant, Participant::USER);
 
 		return new DataResponse();
 	}
@@ -1518,11 +1521,12 @@ class RoomController extends AEnvironmentAwareController {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
-		if ($targetParticipant->getParticipantType() !== Participant::GUEST_MODERATOR) {
+		$attendee = $targetParticipant->getAttendee();
+		if ($attendee->getParticipantType() !== Participant::GUEST_MODERATOR) {
 			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
 
-		$room->setParticipantType($targetParticipant, Participant::GUEST);
+		$this->participantService->updateParticipantType($room, $targetParticipant, Participant::GUEST);
 
 		return new DataResponse();
 	}
