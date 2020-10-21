@@ -1055,13 +1055,17 @@ class RoomController extends AEnvironmentAwareController {
 					$result['statusMessage'] = $statuses[$userId]->getMessage();
 					$result['statusClearAt'] = $statuses[$userId]->getClearAt();
 				}
-			} elseif ($participant->getAttendee()->getActorType() === 'guest') {
+			} elseif ($participant->getAttendee()->getActorType() === 'guests') {
 				if ($result['lastPing'] <= $maxPingAge) {
 					$cleanGuests = true;
+					continue;
 				}
 
 				$result['userId'] = '';
-				$result['displayName'] = $guestNames[sha1($participant['sessionId'])] ?? '';
+				$result['displayName'] = $guestNames[$participant->getAttendee()->getActorId()] ?? '';
+			} else {
+				// Skip unknown actor types
+				continue;
 			}
 
 			$results[] = $result;
