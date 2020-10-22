@@ -68,7 +68,7 @@ class AttendeeMapper extends QBMapper {
 		$query->select('*')
 			->from($this->getTableName())
 			->where($query->expr()->eq('room_id', $query->createNamedParameter($roomId, IQueryBuilder::PARAM_INT)))
-			->andWhere($query->expr()->eq('actor_id', $query->createNamedParameter($actorType)));
+			->andWhere($query->expr()->eq('actor_type', $query->createNamedParameter($actorType)));
 
 		if ($lastJoinedCall instanceof \DateTimeInterface) {
 			$query->andWhere($query->expr()->gte('last_joined_call', $query->createNamedParameter($lastJoinedCall, IQueryBuilder::PARAM_DATE)));
