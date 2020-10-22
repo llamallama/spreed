@@ -223,7 +223,8 @@ class ParticipantService {
 		foreach ($missingUsers as $userId) {
 			if ($this->userManager->userExists($userId)) {
 				$this->addUsers($room, [[
-					'userId' => $userId,
+					'actorType' => 'users',
+					'actorId' => $userId,
 					'participantType' => Participant::OWNER,
 				]]);
 			}
