@@ -88,7 +88,7 @@ class AttendeeMapper extends QBMapper {
 			->from($this->getTableName())
 			->where($query->expr()->eq('room_id', $query->createNamedParameter($roomId, IQueryBuilder::PARAM_INT)));
 
-		// FIXME Should exclude groups and circles when we add them
+		// TODO Should exclude groups and circles when we add them
 
 		if (!empty($participantType)) {
 			$query->andWhere($query->expr()->in('participant_type', $query->createNamedParameter($participantType, IQueryBuilder::PARAM_INT_ARRAY)));
